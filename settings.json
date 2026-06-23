@@ -1,0 +1,7 @@
+{
+    "salary": 8000.0,
+    "budgets": {
+        "Bills": 1500.0,
+        "Shopping": 800.0
+    }
+}

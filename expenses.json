@@ -1,0 +1,42 @@
+[
+    {
+        "category": "Bills",
+        "amount": 300.0,
+        "date": "2026-06-20"
+    },
+    {
+        "category": "Shopping",
+        "amount": 200.0,
+        "date": "2026-06-20"
+    },
+    {
+        "category": "Bills",
+        "amount": 600.0,
+        "date": "2026-06-21"
+    },
+    {
+        "category": "Bills",
+        "amount": 900.0,
+        "date": "2026-06-22"
+    },
+    {
+        "category": "Health",
+        "amount": 200.0,
+        "date": "2026-05-13"
+    },
+    {
+        "category": "Health",
+        "amount": 1000.0,
+        "date": "2026-06-21"
+    },
+    {
+        "category": "Health",
+        "amount": 1500.0,
+        "date": "2026-06-23"
+    },
+    {
+        "category": "Transport",
+        "amount": 100.0,
+        "date": "2026-06-07"
+    }
+]
