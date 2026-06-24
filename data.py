@@ -27,7 +27,7 @@ def load_settings():
 
 def save_settings(settings):
     salary = settings.get("salary", 0)
-    total_budget = get_budgets(settings)["total_budget"]
+    total_budget = get_budgets(settings)
     if salary > 0 and total_budget > salary:
         raise ValueError(
             f"Total budget ({total_budget:,.2f}) exceeds income ({salary:,.2f}). "
@@ -153,4 +153,4 @@ def savings_rate(year: int, month: int):
 
 def get_budgets(settings):
     total = sum(settings.get("budgets", {}).values())
-    return {"budgets": settings.get("budgets", {}), "total_budget": total}
+    return total
