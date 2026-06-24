@@ -26,6 +26,13 @@ def load_settings():
         return {**defaults, **json.load(f)}
 
 def save_settings(settings):
+    salary = settings.get("salary", 0)
+    total_budget = get_budgets(settings)["total_budget"]
+    if salary > 0 and total_budget > salary:
+        raise ValueError(
+            f"Total budget ({total_budget:,.2f}) exceeds income ({salary:,.2f}). "
+            f"Reduce your limits by at least {total_budget - salary:,.2f} SAR."
+        )
     with open(SETTINGS_FILE, "w") as f:
         json.dump(settings, f, indent=4)
 
@@ -143,3 +150,7 @@ def savings_rate(year: int, month: int):
     saved    = max(salary - spent, 0)
     rate     = round(saved / salary * 100, 1) if salary > 0 else None
     return {"salary": salary, "spent": spent, "saved": saved, "savings_rate": rate}
+
+def get_budgets(settings):
+    total = sum(settings.get("budgets", {}).values())
+    return {"budgets": settings.get("budgets", {}), "total_budget": total}
