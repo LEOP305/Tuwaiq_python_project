@@ -41,9 +41,6 @@ def add_expense(category: str, amount: float, expense_date: date):
     })
     save_expenses(expenses)
 
-def get_categories():
-    return sorted(set(e["category"] for e in load_expenses()))
-
 
 # ── Search ────────────────────────────────────────────────────────────────────
 
