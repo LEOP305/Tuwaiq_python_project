@@ -29,8 +29,8 @@ def save_settings(settings):
     salary = settings.get("salary", 0)
     total_budget = get_budgets(settings)
     print(salary)
-    
-    if salary > 0 and total_budget > salary:
+
+    if salary >= 0 and total_budget > salary:
         raise ValueError(
             f"Total budget ({total_budget:,.2f}) exceeds income ({salary:,.2f}). "
             f"Reduce your limits by at least {total_budget - salary:,.2f} SAR."

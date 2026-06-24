@@ -38,5 +38,15 @@
         "category": "Transport",
         "amount": 100.0,
         "date": "2026-06-07"
+    },
+    {
+        "category": "Transport",
+        "amount": 500.0,
+        "date": "2026-06-14"
+    },
+    {
+        "category": "Shopping",
+        "amount": 400.0,
+        "date": "2026-06-18"
     }
 ]
