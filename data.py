@@ -71,20 +71,22 @@ def aggregate_by(field: str, expenses=None):
         totals[key] = totals.get(key, 0) + e["amount"]
     return totals
 
+def get_month_expenses(year: int, month: int):
+    return [e for e in load_expenses() if e["date"].startswith(f"{year}-{month:02d}")]
+
 def monthly_summary(year: int, month: int):
-    expenses = [e for e in load_expenses()
-                if e["date"].startswith(f"{year}-{month:02d}")]
+    """return the total spent per category for a specific month -> {category: total_spent for that month}"""
+    expenses = get_month_expenses(year, month)
     total = sum(e["amount"] for e in expenses)
     return {
-        "expenses": expenses,
-        "total": total,
-        "by_category": aggregate_by("category", expenses),
-        "count": len(expenses),
+        "total": total, # for the dashboard
+        "by_category": aggregate_by("category", expenses), # for the pie chart in the dashboard
+        "count": len(expenses), # count of expenses of that month (used in dashboard)
     }
 
 def aggregate_by_week(year: int, month: int):
     """Sum expenses by week within a month. Returns {Week 1: total, Week 2: ...}"""
-    expenses = monthly_summary(year, month)["expenses"]
+    expenses = get_month_expenses(year, month)
     totals = {"Week 1": 0, "Week 2": 0, "Week 3": 0, "Week 4": 0}
     for e in expenses:
         day = datetime.strptime(e["date"], "%Y-%m-%d").day
@@ -102,7 +104,7 @@ def aggregate_by_week(year: int, month: int):
 def cumulative_spending(year: int, month: int):
     """Return {day: cumulative_total} for every day that has spending in the month."""
     expenses = sorted(
-        monthly_summary(year, month)["expenses"],
+        get_month_expenses(year, month),
         key=lambda e: e["date"]
     )
     result = {}
@@ -120,7 +122,7 @@ def budget_status(year: int, month: int):
     settings = load_settings()
     budgets  = settings.get("budgets", {})
     by_cat   = monthly_summary(year, month)["by_category"]
-    all_cats = set(budgets) | set(by_cat)
+    all_cats = set(budgets) | set(by_cat) # ensure that even categories that don't have budgets limits are included
     status   = []
     for cat in sorted(all_cats):
         spent = by_cat.get(cat, 0)
