@@ -35,6 +35,10 @@ def save_settings(settings):
     if salary > 0 and salary > total_budget:
         with open(SETTINGS_FILE, "w") as f:
             json.dump(settings, f, indent=4)
+    
+    elif salary == 0 and total_budget == 0:
+        with open(SETTINGS_FILE, "w") as f:
+            json.dump(settings, f, indent=4)
 
     else:
         raise ValueError(
