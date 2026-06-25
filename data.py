@@ -27,24 +27,22 @@ def load_settings():
 
 def save_settings(settings):
     salary = settings.get("salary", 0.0)
-    print("-"*10)
-    print(salary)
-    print("-"*10)
     total_budget = get_budgets(settings)
     
-    if salary > 0 and salary > total_budget:
-        with open(SETTINGS_FILE, "w") as f:
-            json.dump(settings, f, indent=4)
-    
-    elif salary == 0 and total_budget == 0:
-        with open(SETTINGS_FILE, "w") as f:
-            json.dump(settings, f, indent=4)
-
-    else:
+    if salary > 0 and total_budget > salary:
         raise ValueError(
             f"Total budget ({total_budget:,.2f}) exceeds income ({salary:,.2f}). "
             f"Reduce your limits by at least {total_budget - salary:,.2f} SAR."
         )
+    if salary <= 0:
+        raise ValueError(
+            f"something went wrong."
+        )
+    
+    with open(SETTINGS_FILE, "w") as f:
+        json.dump(settings, f, indent=4)
+        
+        
 
 
 # ── Expenses ──────────────────────────────────────────────────────────────────

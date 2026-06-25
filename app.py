@@ -417,7 +417,7 @@ elif page == "⚙️  Settings":
         st.markdown("<div style='font-weight:600;color:#9aa3b8;margin-bottom:12px'>Monthly Income</div>",
                     unsafe_allow_html=True)
         new_salary = st.number_input("Income (SAR)", value=float(settings.get("salary", 0)),
-                                     min_value=0.0, step=100.0, format="%.2f")
+                                      step=100.0, format="%.2f")
         if st.button("Save Income"):
             settings["salary"] = new_salary
             save_settings(settings)
