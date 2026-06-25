@@ -273,8 +273,11 @@ elif page == "➕  Add Expense":
             submitted    = st.form_submit_button("Add Expense")
 
         if submitted:
-            add_expense(category, amount, expense_date)
-            st.success(f"Added {category} — {sar(amount)} on {expense_date}")
+            try:
+                add_expense(category, amount, expense_date)
+                st.success(f"Added {category} — {sar(amount)} on {expense_date}")
+            except ValueError as e:
+                st.error(str(e))
 
     st.markdown("---")
     st.markdown("<div class='section-title'>Recent Expenses</div>", unsafe_allow_html=True)
@@ -417,11 +420,15 @@ elif page == "⚙️  Settings":
         st.markdown("<div style='font-weight:600;color:#9aa3b8;margin-bottom:12px'>Monthly Income</div>",
                     unsafe_allow_html=True)
         new_salary = st.number_input("Income (SAR)", value=float(settings.get("salary", 0)),
-                                     min_value=0.0, step=100.0, format="%.2f")
+                                      step=100.0, format="%.2f")
         if st.button("Save Income"):
             settings["salary"] = new_salary
-            save_settings(settings)
-            st.success("Income saved.")
+            try:
+                save_settings(settings)
+                st.success("Income saved.")
+            except ValueError as e:
+                st.error(str(e))
+            
 
     st.markdown("---")
     st.markdown("<div class='section-title'>Category Budget Limits</div>", unsafe_allow_html=True)
@@ -438,5 +445,8 @@ elif page == "⚙️  Settings":
                                            key=f"budget_{cat}")
     if st.button("Save Budgets"):
         settings["budgets"] = {k: v for k, v in updated.items() if v > 0}
-        save_settings(settings)
-        st.success("Budgets saved.")
+        try:
+            save_settings(settings)
+            st.success("Budgets saved.")
+        except ValueError as e:
+            st.error(str(e))

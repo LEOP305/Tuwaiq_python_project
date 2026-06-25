@@ -48,5 +48,10 @@
         "category": "Shopping",
         "amount": 400.0,
         "date": "2026-06-18"
+    },
+    {
+        "category": "Other",
+        "amount": 300.0,
+        "date": "2026-06-27"
     }
 ]
